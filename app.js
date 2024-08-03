@@ -36,12 +36,28 @@ app.get('/', (req, res) => {
     if (req.isAuthenticated()) {
         res.render('index')
     } else {
-        res.redirect('/login');
+        res.redirect('/login')
     }
 });
 
-app.use('/sign-up', signupRouter);
-app.use('/login', loginRouter);
+app.use('/sign-up', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.redirect('/');
+    } else {
+        (req, res) => signupRouter(req, res);
+    }
+});
+
+app.use('/login', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.redirect('/');
+    } else {
+        (req, res) => loginRouter(req, res);
+    }
+});
+
+// app.use('/sign-up', signupRouter);
+// app.use('/login', loginRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
