@@ -8,16 +8,19 @@
 <body>
     <h1>ODIN | Club Message App</h1>
     <form action="/sign-up" method="POST">
+        <label for="name">Your Name</label>
+        <input id="name" name="name" placeholder="Your Good Name" type="text" required />
+        <br>
         <label for="username">Username</label>
-        <input id="username" name="username" placeholder="username" type="text" />
+        <input id="username" name="username" placeholder="username" type="text" required />
         <br>
         <label for="password">Password</label>
-        <input id="password" name="password" type="password" />
+        <input id="password" name="password" type="password" required />
         <br>
         <label for="confirm-password">Confirm Password</label>
-        <input id="confirm-password" name="confirm-password" type="password" />
+        <input id="confirm-password" name="confirm-password" type="password" required />
         <br>
-        <button>Sign Up</button>
+        <button type="submit">Sign Up</button>
     </form>
 </body>
 </html>
