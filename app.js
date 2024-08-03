@@ -4,6 +4,7 @@ const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const signupRouter = require('./router/signupRouter');
 const pool = require('./db/pool');
+const passport = require('./controller/passport');
 const express = require('express');
 
 const app = express();
@@ -22,6 +23,8 @@ app.use(session({
     }),
 }));
 
+app.use(passport.session());
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -29,7 +32,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({extended: true}));
 
-app.get('/', (req, res) => res.render('index'));
+app.get('/', (req, res) => {
+    if (req.isAuthenticated()) {
+        res.render('index')
+    } else {
+        res.status(404).json({'error': 'Unauthorized error'});
+    }
+});
 
 app.use('/sign-up', signupRouter);
 
