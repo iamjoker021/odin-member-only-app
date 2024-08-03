@@ -2,7 +2,7 @@ const dotenv = require('dotenv').config();
 const path = require('node:path');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
-const signupRouter = require('./router/signupRouter');
+const { signupRouter, loginRouter } = require('./router/authPageRouter');
 const pool = require('./db/pool');
 const passport = require('./controller/passport');
 const express = require('express');
@@ -36,11 +36,12 @@ app.get('/', (req, res) => {
     if (req.isAuthenticated()) {
         res.render('index')
     } else {
-        res.status(404).json({'error': 'Unauthorized error'});
+        res.redirect('/login');
     }
 });
 
 app.use('/sign-up', signupRouter);
+app.use('/login', loginRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

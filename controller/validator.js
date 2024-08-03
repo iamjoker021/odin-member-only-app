@@ -27,6 +27,19 @@ const signupValidation = [
     }),
 ]
 
+const loginValidation = [
+    body('username')
+    .trim()
+    .notEmpty()
+    .withMessage('Username should not be empty')
+    .escape(),
+    body('password')
+    .trim()
+    .notEmpty()
+    .withMessage('Password should not be empty')
+    .escape(),
+]
+
 const validate = (req, res, next) => {
     const errors = validationResult(req)
     if (errors.isEmpty()) {
@@ -43,5 +56,6 @@ const validate = (req, res, next) => {
 
 module.exports = {
     signupValidation,
+    loginValidation,
     validate
 }

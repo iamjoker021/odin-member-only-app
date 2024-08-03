@@ -21,6 +21,28 @@ passport.use(new LocalStrategy(async (username, password, done) => {
         .catch((err) => done(err))
     })
     .catch(err => done(err));
-  }));
+}));
+
+passport.serializeUser((user, done) => {
+    done(null, user.username);
+})
+
+passport.deserializeUser(async (username, done) => {
+    try {
+        getUserDetails(username)
+        .then(user => {
+            if (user) {
+                done(null, user)
+            }
+            else {
+                throw new Error('User is not authenticated');
+            }
+        })
+        .catch(err => done(err));
+    }
+    catch (err) {
+        done(err);
+    }
+})
 
 module.exports = passport;
