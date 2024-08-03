@@ -2,7 +2,7 @@ const dotenv = require('dotenv').config();
 const path = require('node:path');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
-const { signupRouter, loginRouter } = require('./router/authPageRouter');
+const { signupRouter, loginRouter, logoutRouter } = require('./router/authPageRouter');
 const pool = require('./db/pool');
 const passport = require('./controller/passport');
 const express = require('express');
@@ -34,30 +34,15 @@ app.use(express.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
     if (req.isAuthenticated()) {
-        res.render('index')
+        res.render('index');
     } else {
-        res.redirect('/login')
+        res.redirect('/login');
     }
 });
 
-app.use('/sign-up', (req, res) => {
-    if (req.isAuthenticated()) {
-        res.redirect('/');
-    } else {
-        (req, res) => signupRouter(req, res);
-    }
-});
-
-app.use('/login', (req, res) => {
-    if (req.isAuthenticated()) {
-        res.redirect('/');
-    } else {
-        (req, res) => loginRouter(req, res);
-    }
-});
-
-// app.use('/sign-up', signupRouter);
-// app.use('/login', loginRouter);
+app.use('/sign-up', signupRouter);
+app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
