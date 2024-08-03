@@ -2,6 +2,7 @@
 <html lang="en">
     <%- include('head') %>
     <body>
+        <%- include('navbar', { loggedIn: false }) %>
         <form action="/login" method="POST">
             <label for="username">Username</label>
             <input id="username" name="username" placeholder="username" type="text" />

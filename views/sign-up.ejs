@@ -3,6 +3,7 @@
     <%- include('head') %>
     <body>
         <h1>ODIN | Club Message App</h1>
+        <%- include('navbar', { loggedIn: false }) %>
         <form action="/sign-up" method="POST">
             <label for="name">Your Name</label>
             <input id="name" name="name" placeholder="Your Good Name" type="text" required />
