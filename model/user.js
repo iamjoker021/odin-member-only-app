@@ -14,7 +14,12 @@ const getUserDetails = async (username) => {
     }
 }
 
+const updateMemeberShipToClub = async (userId) => {
+    await pool.query('UPDATE users SET membership_status = $2 WHERE id = $1', [userId, 'club']);
+}
+
 module.exports = {
     addUser,
-    getUserDetails
+    getUserDetails,
+    updateMemeberShipToClub
 }

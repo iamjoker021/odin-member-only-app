@@ -1,6 +1,6 @@
 const dotenv = require('dotenv').config();
 const bycrypt = require('bcryptjs');
-const { addUser } = require('../model/user');
+const { addUser, updateMemeberShipToClub } = require('../model/user');
 
 const signupPage = (req, res) => {
     res.render('sign-up');
@@ -25,8 +25,38 @@ const loginPage = (req, res) => {
     res.render('login');
 }
 
+const joinClubPage = (req, res) => {
+    if (req.isAuthenticated()) {
+        res.render('join-club');
+    }
+    else {
+        res.redirect('/login');
+    }
+}
+
+const joinClub = async (req, res) => {
+    if (!req.isAuthenticated()) {
+        res.redirect('/login');
+    }
+    try {
+        const { password } = req.body;
+        if (password === process.env.SECRET_PASSCODE) {
+            await updateMemeberShipToClub(req.user.id);
+            res.redirect('/');
+        }
+        else {
+            res.status(401).json({'error': 'Unable to join club', 'msg': 'Invalid Passcode'})
+        }
+    }
+    catch (err) {
+        res.status(500).json({'error': 'Unable to update Membership', 'msg': err});
+    }
+}
+
 module.exports = {
     signupPage,
     signupUser,
-    loginPage
+    loginPage,
+    joinClubPage,
+    joinClub
 }

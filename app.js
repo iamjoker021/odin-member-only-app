@@ -2,7 +2,7 @@ const dotenv = require('dotenv').config();
 const path = require('node:path');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
-const { signupRouter, loginRouter, logoutRouter } = require('./router/authPageRouter');
+const { signupRouter, loginRouter, logoutRouter, joinClubRouter } = require('./router/authPageRouter');
 const pool = require('./db/pool');
 const passport = require('./controller/passport');
 const express = require('express');
@@ -38,6 +38,7 @@ app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 
 app.use('/', messageRouter);
+app.use('/join-club', joinClubRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));

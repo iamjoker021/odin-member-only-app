@@ -40,6 +40,14 @@ const loginValidation = [
     .escape(),
 ]
 
+const clubValidation = [
+    body('password')
+    .trim()
+    .notEmpty()
+    .withMessage('Password should not be empty')
+    .escape(),
+]
+
 const createMessageValidation = [
     body('title')
     .trim()
@@ -71,5 +79,6 @@ module.exports = {
     signupValidation,
     loginValidation,
     createMessageValidation,
+    clubValidation,
     validate
 }

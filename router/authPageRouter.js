@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const { signupPage, signupUser, loginPage } = require('../controller/authController');
-const { signupValidation, loginValidation, validate } = require('../controller/validator');
+const { signupPage, signupUser, loginPage, joinClubPage, joinClub } = require('../controller/authController');
+const { signupValidation, loginValidation, clubValidation, validate } = require('../controller/validator');
 const passport = require('../controller/passport');
 
 const signupRouter = Router();
@@ -33,8 +33,13 @@ logoutRouter.get('/', (req, res, next) => {
     });
 })
 
+const joinClubRouter = Router();
+joinClubRouter.get('/', joinClubPage);
+joinClubRouter.post('/', clubValidation, validate, joinClub);
+
 module.exports = {
     signupRouter,
     loginRouter,
-    logoutRouter
+    logoutRouter,
+    joinClubRouter
 };
