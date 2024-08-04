@@ -3,7 +3,11 @@ const bycrypt = require('bcryptjs');
 const { addUser, updateMemeberShipToClub } = require('../model/user');
 
 const signupPage = (req, res) => {
-    res.render('sign-up');
+    if (req.isAuthenticated()) {
+        res.redirect('/');
+    } else {
+        res.render('sign-up');
+    }
 }
 
 const signupUser = (req, res) => {
@@ -22,7 +26,20 @@ const signupUser = (req, res) => {
 }
 
 const loginPage = (req, res) => {
-    res.render('login');
+    if (req.isAuthenticated()) {
+        res.redirect('/');
+    } else {
+        res.render('login');
+    }
+}
+
+const logoutUser = (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect('/login');
+    });
 }
 
 const joinClubPage = (req, res) => {
@@ -57,6 +74,7 @@ module.exports = {
     signupPage,
     signupUser,
     loginPage,
+    logoutUser,
     joinClubPage,
     joinClub
 }
