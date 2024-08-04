@@ -1,12 +1,9 @@
 const { addMessage, getAllMessages, removeMessage } = require("../model/message");
 
 const messageListPage = async (req, res) => {
-    if (req.isAuthenticated()) {
-        const msg = await getAllMessages();
-        res.render('index', {messages: msg, membership: req.user.membership_status});
-    } else {
-        res.redirect('/login');
-    }
+    let membership = false;
+    const msg = await getAllMessages();
+    res.render('index', {messages: msg, membership: membership});
 }
 
 const createMessagePage = (req, res) => {

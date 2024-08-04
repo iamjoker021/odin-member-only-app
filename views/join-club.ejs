@@ -2,7 +2,7 @@
 <html lang="en">
     <%- include('head') %>
     <body>
-        <%- include('navbar', { loggedIn: true }) %>
+        <%- include('navbar') %>
         <form action="/join-club" method="POST">
             <label for="password">Secret Passcode</label>
             <input id="password" name="password" type="password" />

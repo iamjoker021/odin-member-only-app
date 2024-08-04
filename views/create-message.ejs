@@ -2,7 +2,7 @@
 <html lang="en">
     <%- include('head') %>
     <body>
-        <%- include('navbar', { loggedIn: true }) %>
+        <%- include('navbar') %>
         <h1>Create new Message</h1>
         <form action="/create-message" method="POST">
             <label for="title">Title: </label>

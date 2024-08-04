@@ -36,6 +36,13 @@ app.use(express.urlencoded({extended: true}));
 app.use('/sign-up', signupRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
+app.use((req, res, next) => {
+    if (req.user) {
+        res.locals.currentUser = req.user; 
+        membership = req.user.membership_status;
+    }
+    next();
+});
 
 app.use('/', messageRouter);
 app.use('/join-club', joinClubRouter);

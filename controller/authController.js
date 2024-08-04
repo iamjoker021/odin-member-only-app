@@ -34,6 +34,7 @@ const loginPage = (req, res) => {
 }
 
 const logoutUser = (req, res, next) => {
+    res.locals.currentUser = null;
     req.logout((err) => {
         if (err) {
           return next(err);
