@@ -1,13 +1,12 @@
 <nav>
     <ul>
-        <li>
-            <% if (loggedIn) { %>
-            <a href="/">Home</a>
-            <a href="/logout">Logout</a>
-            <% } else { %>
-            <a href="/sign-up">Sign-Up</a>
-            <a href="/login">Login Page</a>
-            <% } %>
-        </li>
+        <% if (loggedIn) { %>
+        <li><a href="/">Home</a></li>
+        <li><a href="/create-message">New Message</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <% } else { %>
+        <li><a href="/sign-up">Sign-Up</a></li>
+        <li><a href="/login">Login Page</a></li>
+        <% } %>
     </ul>
 </nav>
