@@ -1,8 +1,9 @@
-const { addMessage } = require("../model/message");
+const { addMessage, getAllMessages } = require("../model/message");
 
-const messageListPage = (req, res) => {
+const messageListPage = async (req, res) => {
     if (req.isAuthenticated()) {
-        res.render('index');
+        const msg = await getAllMessages();
+        res.render('index', {messages: msg, membership: req.user.membership_status});
     } else {
         res.redirect('/login');
     }
@@ -12,10 +13,10 @@ const createMessagePage = (req, res) => {
     res.render('create-message');
 }
 
-const createMessage = (req, res) => {
+const createMessage = async (req, res) => {
     const { title, message } = req.body;
     try {
-        addMessage(req.user.id, title, message);
+        await addMessage(req.user.id, title, message);
         res.redirect('/');
     }
     catch (err) {

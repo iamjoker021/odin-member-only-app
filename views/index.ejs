@@ -3,6 +3,22 @@
     <%- include('head') %>
     <body>
         <%- include('navbar', { loggedIn: true }) %>
-        <h1>Index Page to be secured</h1>
+        <h1>Club Messages</h1>
+        <ul>
+            <% for(let i=0; i < messages.length; i++) { %>
+                <li>
+                    <div>
+                        <h2><%= messages[i].title %></h2>
+                        <p><%= messages[i].text %></p>
+                        <% if(membership === 'club') { %>
+                            <p>Author: <% messages[i].author %></p>
+                        <% } %>
+                        <% if(membership === 'admin') { %>
+                            <a href="/delete/<%= messages[i].id %>">Delete</a>
+                        <% } %>
+                    </div>
+                </li>
+            <% } %>
+        </ul>
     </body>
 </html>
