@@ -40,6 +40,19 @@ const loginValidation = [
     .escape(),
 ]
 
+const createMessageValidation = [
+    body('title')
+    .trim()
+    .notEmpty()
+    .withMessage('Title should not be empty')
+    .escape(),
+    body('message')
+    .trim()
+    .notEmpty()
+    .withMessage('Message should not be empty')
+    .escape(),
+]
+
 const validate = (req, res, next) => {
     const errors = validationResult(req)
     if (errors.isEmpty()) {
@@ -57,5 +70,6 @@ const validate = (req, res, next) => {
 module.exports = {
     signupValidation,
     loginValidation,
+    createMessageValidation,
     validate
 }

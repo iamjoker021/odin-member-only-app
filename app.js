@@ -6,6 +6,7 @@ const { signupRouter, loginRouter, logoutRouter } = require('./router/authPageRo
 const pool = require('./db/pool');
 const passport = require('./controller/passport');
 const express = require('express');
+const messageRouter = require('./router/messageRouter');
 
 const app = express();
 
@@ -32,17 +33,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(express.urlencoded({extended: true}));
 
-app.get('/', (req, res) => {
-    if (req.isAuthenticated()) {
-        res.render('index');
-    } else {
-        res.redirect('/login');
-    }
-});
-
 app.use('/sign-up', signupRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
+
+app.use('/', messageRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on ${PORT}`));
