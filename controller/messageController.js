@@ -3,7 +3,7 @@ const { addMessage, getAllMessages, removeMessage } = require("../model/message"
 const messageListPage = async (req, res) => {
     let membership = false;
     const msg = await getAllMessages();
-    res.render('index', {messages: msg, membership: membership});
+    res.render('index', {messages: msg});
 }
 
 const createMessagePage = (req, res) => {

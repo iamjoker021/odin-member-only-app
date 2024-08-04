@@ -10,10 +10,10 @@
                     <div>
                         <h2><%= messages[i].title %></h2>
                         <p><%= messages[i].text %></p>
-                        <% if(membership === 'club' || membership === 'admin') { %>
+                        <% if (locals.currentUser && ['club', 'admin'].includes(locals.currentUser.membership_status)) { %>
                             <p>Author: <%= messages[i].author %></p>
                         <% } %>
-                        <% if(membership === 'admin') { %>
+                        <% if (locals.currentUser && locals.currentUser.membership_status === 'admin') { %>
                             <a href="/delete-message/<%= messages[i].id %>">Delete</a>
                         <% } %>
                     </div>
