@@ -1,4 +1,4 @@
-const { addMessage, getAllMessages } = require("../model/message");
+const { addMessage, getAllMessages, removeMessage } = require("../model/message");
 
 const messageListPage = async (req, res) => {
     if (req.isAuthenticated()) {
@@ -24,8 +24,23 @@ const createMessage = async (req, res) => {
     }
 }
 
+const deleteMessage = async (req, res) => {
+    if (req.user.membership_status !== 'admin') {
+        res.status(404).json({'error': 'Unauthorized Error', 'msg': 'You are not authorized to perform delete'});
+    }
+    const messageId = req.params.id;
+    try {
+        await removeMessage(messageId);
+        res.redirect('/');
+    }
+    catch (err) {
+        res.status(500).json({'error': 'Unable to Create message', 'msg': err});
+    }
+}
+
 module.exports = {
     messageListPage,
     createMessagePage,
-    createMessage
+    createMessage,
+    deleteMessage
 }

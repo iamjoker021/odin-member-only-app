@@ -9,7 +9,12 @@ const addMessage = async (userId, title, message) => {
     await pool.query('INSERT INTO message (title, text, user_id) VALUES ($2, $3, $1)', [userId, title, message]);
 }
 
+const removeMessage = async (messageId) => {
+    await pool.query('DELETE FROM message WHERE ID = $1', [messageId]);
+}
+
 module.exports = { 
     getAllMessages,
-    addMessage
+    addMessage,
+    removeMessage
 }
